@@ -1,6 +1,6 @@
 package src.core;
 
-class GameUniqueId
+public class GameUniqueId
 {
   private static GameUniqueId instance = new GameUniqueId();
   private GameUniqueId() {}

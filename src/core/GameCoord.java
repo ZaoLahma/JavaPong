@@ -1,6 +1,6 @@
 package src.core;
 
-class GameCoord
+public class GameCoord
 {
   private int x;
   private int y;
