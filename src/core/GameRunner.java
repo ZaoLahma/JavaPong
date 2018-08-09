@@ -1,10 +1,12 @@
 package src.core;
 
 import src.core.GameLogic;
+import src.core.GameGui;
 
 public class GameRunner
 {
   private final GameLogic game;
+  private final GameGui gui;
 
   public GameRunner(GameLogic game) {
     this.game = game;
@@ -15,6 +17,8 @@ public class GameRunner
                        Integer.toString(game.getScreenHeight()) + 
                        ", " + 
                        Integer.toString(game.getScreenWidth()));
+
+    gui = new GameGui(this.game);
   }
   public void execute() {
     game.execute();
