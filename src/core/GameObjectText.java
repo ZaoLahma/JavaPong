@@ -17,6 +17,10 @@ public class GameObjectText extends GameObject
     super(pos);
     this.str = str;
   }
+
+  public void setText(String str) {
+    this.str = str;
+  }
   
   public void paint(Graphics g) {
     g.setColor(new Color(50, 200, 200));

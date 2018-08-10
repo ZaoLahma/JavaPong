@@ -96,11 +96,8 @@ public class PongLogic extends GameLogic
 
     if(PongBall.PongBallCollision.LEFT_WALL_COLLISION == ball.getCurrCollision()) {
       player2Score++;
-      gameObjects.remove(playerTwoScoreText);
-      playerTwoScoreText = new GameObjectText(PLAYER_2_STRING_POS, 
-                                              PLAYER_2_STRING + 
-                                              Integer.toString(player2Score));
-      gameObjects.add(playerTwoScoreText);    
+      playerTwoScoreText.setText(PLAYER_2_STRING + 
+                                 Integer.toString(player2Score));  
       ball.resetBall(new GameCoord(640 / 2, 480 / 2));
     }
     else if(PongBall.PongBallCollision.RIGHT_WALL_COLLISION == ball.getCurrCollision()) {
