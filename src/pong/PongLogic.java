@@ -14,7 +14,6 @@ import src.pong.PongWall.PongWallDirection;
 
 public class PongLogic extends GameLogic
 {
-  private final PongLogicRunnable runnable;
   private final PongWall leftWall;
   private final PongWall rightWall;
   private final PongWall upWall;
@@ -47,15 +46,21 @@ public class PongLogic extends GameLogic
     ball = new PongBall(new GameCoord(640 / 2, 480 / 2), 640, 480);
     gameObjects.add(ball);
 
-    runnable = new PongLogicRunnable(this);
     prevTime = 0;
   }
 
   public void execute() {
     System.out.println("Pong START");
-    prevTime = System.currentTimeMillis();
     /* Run game logic at 30ish fps */
-    gameExecutor.scheduleAtFixedRate(runnable, 0, 33, TimeUnit.MILLISECONDS);    
+    Runnable pongRunnable = new Runnable()
+    {
+      public void run()
+      {
+        pongRun();
+      }
+    };
+    prevTime = System.currentTimeMillis();
+    gameExecutor.scheduleAtFixedRate(pongRunnable, 0, 33, TimeUnit.MILLISECONDS);    
   }
 
   public void pongRun() {
@@ -74,21 +79,4 @@ public class PongLogic extends GameLogic
 
     prevTime = System.currentTimeMillis();
   }
-}
-
-class PongLogicRunnable implements Runnable
-{
-  PongLogic game;
-
-  private PongLogicRunnable() {
-    game = null;
-  }
-
-  public PongLogicRunnable(PongLogic game) {
-    this.game = game;
-  }
-
-	public void run() {
-    game.pongRun();
-	}
 }

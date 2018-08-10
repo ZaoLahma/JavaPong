@@ -35,20 +35,37 @@ public class PongBall extends GameObject
 
   public void paint(Graphics g) {
     g.setColor(new Color(255, 75, 75));
-    g.fillOval(pos.getX(), pos.getY(), ballSize, ballSize);
+    g.fillOval(pos.getX() - (ballSize / 2), 
+               pos.getY() - (ballSize / 2), 
+               ballSize, 
+               ballSize);
   }
 
   public void update(int timeDelta) {
-    if((pos.getX() <= ballSize) || (pos.getX() >= (screenWidth - ballSize))) {
+    if((pos.getX() <= (ballSize / 2)) || (pos.getX() >= (screenWidth - (ballSize / 2)))) {
       xSpeedPerTimeUnit = -xSpeedPerTimeUnit;
     }
 
-    if((pos.getY() <= ballSize) || (pos.getY() >= (screenHeight - ballSize))) {
+    if((pos.getY() <= (ballSize / 2)) || (pos.getY() >= (screenHeight - (ballSize / 2)))) {
       ySpeedPerTimeUnit = -ySpeedPerTimeUnit;
     }
 
     int xDiff = (int)((timeDelta * xSpeedPerTimeUnit) + 0.5);
     int yDiff = (int)((timeDelta * ySpeedPerTimeUnit) + 0.5);
+
+    if(pos.getX() + xDiff < (ballSize / 2)) {
+      pos.setX((ballSize / 2));
+    }
+    else if(pos.getX() + xDiff > screenWidth - (ballSize / 2)) {
+      pos.setX(screenWidth - (ballSize / 2));
+    }
+
+    if(pos.getY() + yDiff < (ballSize / 2)) {
+      pos.setY((ballSize / 2));
+    }
+    else if(pos.getY() + yDiff > screenHeight - (ballSize / 2)) {
+      pos.setY(screenHeight - (ballSize / 2));
+    }    
 
     pos.setX(pos.getX() + xDiff);
     pos.setY(pos.getY() + yDiff);
