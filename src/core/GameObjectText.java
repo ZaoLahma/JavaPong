@@ -23,7 +23,7 @@ public class GameObjectText extends GameObject
     g.drawString(str, pos.getX(), pos.getY());
   }
   
-	public void update() {
+	public void update(int timeDelta) {
 		
 	}
 }

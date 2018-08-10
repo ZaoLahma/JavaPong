@@ -23,5 +23,5 @@ public abstract class GameObject
 
   public abstract void paint(Graphics g);
 
-  public abstract void update();
+  public abstract void update(int timeDelta);
 }

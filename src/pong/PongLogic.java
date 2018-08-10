@@ -19,6 +19,9 @@ public class PongLogic extends GameLogic
   private final PongWall rightWall;
   private final PongWall upWall;
   private final PongWall downWall;
+  private final PongBall ball;
+
+  private long prevTime;
 
   PongLogic() {
     super(640, 480); /* screenWidth, screenHeight */
@@ -40,24 +43,36 @@ public class PongLogic extends GameLogic
     gameObjects.add(rightWall);
     gameObjects.add(upWall);
     gameObjects.add(downWall);
+
+    ball = new PongBall(new GameCoord(640 / 2, 480 / 2), 640, 480);
+    gameObjects.add(ball);
+
     runnable = new PongLogicRunnable(this);
+    prevTime = 0;
   }
 
   public void execute() {
     System.out.println("Pong START");
+    prevTime = System.currentTimeMillis();
     /* Run game logic at 30ish fps */
     gameExecutor.scheduleAtFixedRate(runnable, 0, 33, TimeUnit.MILLISECONDS);    
   }
 
   public void pongRun() {
+    long now = System.currentTimeMillis();
+
+    int timeDelta = (int) (now - prevTime);
+
     Iterator gameIter = gameObjects.iterator();
 
     while(gameIter.hasNext()) {
       GameObject object = (GameObject) gameIter.next();
-      object.update();
+      object.update(timeDelta);
     }
 
     gui.redraw();
+
+    prevTime = System.currentTimeMillis();
   }
 }
 

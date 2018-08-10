@@ -40,7 +40,7 @@ public class PongWall extends GameObject
     }
   }
 
-  public void update() {
+  public void update(int timeDelta) {
 
   }
 }

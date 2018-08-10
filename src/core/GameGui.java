@@ -40,7 +40,7 @@ public class GameGui
   } 
 
   public void redraw() {
-
+    screen.redraw();
   }
 }
 
@@ -53,6 +53,10 @@ class GameScreen extends JPanel {
 
   public GameScreen(GameLogic game) {
     this.game = game;
+  }
+
+  public void redraw() {
+    repaint();
   }
 
   public Dimension getPreferredSize() 
