@@ -1,12 +1,14 @@
 package src.core;
 
 import src.core.GameUniqueId;
+import java.awt.Graphics;
+
 import src.core.GameCoord;
 
-public class GameObject
+public abstract class GameObject
 {
   private final int objectId;
-  private GameCoord pos;
+  protected GameCoord pos;
   
   GameObject(GameCoord pos) {
     objectId = GameUniqueId.getInstance().getUniqueId();
@@ -14,4 +16,7 @@ public class GameObject
     this.pos = pos;
   }
 
+  public abstract void paint(Graphics g);
+
+  public abstract void update();
 }

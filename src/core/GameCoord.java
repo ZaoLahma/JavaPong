@@ -12,6 +12,11 @@ public class GameCoord
     this.y = y;
   }
 
+  public GameCoord(GameCoord newCoord) {
+    this.x = newCoord.getX();
+    this.y = newCoord.getY();
+  }
+
   public void setX(int x) {
     this.x = x;
   }

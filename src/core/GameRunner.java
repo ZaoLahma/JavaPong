@@ -19,6 +19,7 @@ public class GameRunner
                        Integer.toString(game.getScreenWidth()));
 
     gui = new GameGui(this.game);
+    this.game.setGui(gui);
   }
   public void execute() {
     game.execute();

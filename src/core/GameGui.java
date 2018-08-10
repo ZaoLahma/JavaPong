@@ -3,6 +3,8 @@ package src.core;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.Vector;
+
 import src.core.GameLogic;
 
 public class GameGui
@@ -17,8 +19,7 @@ public class GameGui
 
   public GameGui(GameLogic game) {
     this.game = game;
-    screen = new GameScreen(this.game.getScreenWidth(), 
-                            this.game.getScreenHeight());
+    screen = new GameScreen(this.game);
 
     JFrame frame = new JFrame();
     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -36,29 +37,36 @@ public class GameGui
     frame.pack();
     frame.setVisible(true);
   } 
+
+  public void redraw() {
+
+  }
 }
 
 class GameScreen extends JPanel {
-  private final int screenWidth;
-  private final int screenHeight;
+  private final GameLogic game;
 
   private GameScreen() {
-    this.screenWidth = 0;
-    this.screenHeight = this.screenWidth;
+    this.game = null;
   }
 
-  public GameScreen(int screenWidth, int screenHeight) {
-    this.screenWidth = screenWidth;
-    this.screenHeight = screenHeight;
+  public GameScreen(GameLogic game) {
+    this.game = game;
   }
 
   public Dimension getPreferredSize() 
   {
-      return new Dimension(screenWidth, screenHeight);
+      return new Dimension(game.getScreenHeight(), game.getScreenWidth());
   }  
 
   protected void paintComponent(Graphics g) 
   {
     super.paintComponent(g);
-  }  
+
+    Vector<GameObject> gameObjects = game.getGameObjects();
+
+    for(int i = 0; i < gameObjects.size(); ++i) {
+      gameObjects.elementAt(i).paint(g);
+    }
+  }
 }
