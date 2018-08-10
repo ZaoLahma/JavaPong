@@ -25,12 +25,25 @@ public class GameGui
     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     frame.setResizable(false);
   
-    frame.addWindowListener(new WindowAdapter()
-    {
-      public void windowClosing(WindowEvent e)
-      {
+    frame.addWindowListener(new WindowAdapter() {
+      public void windowClosing(WindowEvent e) {
         System.out.println("Window close");
         game.stop();
+      }
+    });
+
+    frame.addKeyListener(new KeyListener() {
+      public void keyPressed(KeyEvent event) {
+        //System.out.println("Key pressed: " + event.getKeyCode());
+        game.onKeyPressed(event.getKeyCode());
+      }
+
+      public void keyTyped(KeyEvent e) {
+        
+      }
+
+      public void keyReleased(KeyEvent e) {
+        
       }
     });
 

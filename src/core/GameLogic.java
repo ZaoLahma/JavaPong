@@ -50,4 +50,6 @@ public abstract class GameLogic
   }
 
   public abstract void execute();
+
+  public abstract void onKeyPressed(int key);
 }

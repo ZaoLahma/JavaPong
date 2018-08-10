@@ -17,13 +17,13 @@ public class GameObjectText extends GameObject
     super(pos);
     this.str = str;
   }
-
-	public void paint(Graphics g) {
+  
+  public void paint(Graphics g) {
     g.setColor(new Color(50, 200, 200));
     g.drawString(str, pos.getX(), pos.getY());
   }
   
-	public void update(int timeDelta) {
-		
-	}
+  public void update(int timeDelta) {
+
+  }
 }

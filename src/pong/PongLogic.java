@@ -19,6 +19,7 @@ public class PongLogic extends GameLogic
   private final PongWall upWall;
   private final PongWall downWall;
   private final PongBall ball;
+  private final PongPaddle leftPaddle;
 
   private long prevTime;
 
@@ -45,6 +46,9 @@ public class PongLogic extends GameLogic
 
     ball = new PongBall(new GameCoord(640 / 2, 480 / 2), 640, 480);
     gameObjects.add(ball);
+
+    leftPaddle = new PongPaddle(new GameCoord(5, 480 / 2), 60, 480);
+    gameObjects.add(leftPaddle);
 
     prevTime = 0;
   }
@@ -78,5 +82,14 @@ public class PongLogic extends GameLogic
     gui.redraw();
 
     prevTime = System.currentTimeMillis();
+  }
+
+  public void onKeyPressed(int key) {
+    if(38 == key) {
+      leftPaddle.move(-20);
+    }
+    else if(40 == key) {
+      leftPaddle.move(20);
+    }
   }
 }
