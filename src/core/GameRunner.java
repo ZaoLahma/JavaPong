@@ -10,13 +10,10 @@ public class GameRunner
 
   public GameRunner(GameLogic game) {
     this.game = game;
-    /*
-      Prepare GUI and so on here?
-    */
     System.out.println("GameRunner instantiated with screen size: " + 
-                       Integer.toString(game.getScreenHeight()) + 
+                       Integer.toString(game.getScreenWidth()) + 
                        ", " + 
-                       Integer.toString(game.getScreenWidth()));
+                       Integer.toString(game.getScreenHeight()));
 
     gui = new GameGui(this.game);
     this.game.setGui(gui);

@@ -9,8 +9,13 @@ public abstract class GameObject
 {
   private final int objectId;
   protected GameCoord pos;
+
+  public GameObject() {
+    objectId = 0;
+    this.pos = null;
+  }
   
-  GameObject(GameCoord pos) {
+  public GameObject(GameCoord pos) {
     objectId = GameUniqueId.getInstance().getUniqueId();
     System.out.println("Created object with id " + Integer.toString(objectId));
     this.pos = pos;

@@ -23,6 +23,7 @@ public class GameGui
 
     JFrame frame = new JFrame();
     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    frame.setResizable(false);
   
     frame.addWindowListener(new WindowAdapter()
     {
@@ -56,12 +57,15 @@ class GameScreen extends JPanel {
 
   public Dimension getPreferredSize() 
   {
-      return new Dimension(game.getScreenHeight(), game.getScreenWidth());
+      return new Dimension(game.getScreenWidth(), game.getScreenHeight());
   }  
 
   protected void paintComponent(Graphics g) 
   {
     super.paintComponent(g);
+
+    Graphics2D g2D = (Graphics2D) g;
+    g2D.setStroke(new BasicStroke(3));    
 
     Vector<GameObject> gameObjects = game.getGameObjects();
 
