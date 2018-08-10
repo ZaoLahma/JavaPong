@@ -11,9 +11,19 @@ public class PongBall extends GameObject
   private final int screenWidth;
   private final int screenHeight;
   private final int ballSize = 20;
+  private final PongPaddle leftPaddle;
+  private final PongPaddle rightPaddle;
 
   private double xSpeedPerTimeUnit;
   private double ySpeedPerTimeUnit;
+
+  private PongBallCollision currCollision = PongBallCollision.NO_COLLISION;
+
+  public enum PongBallCollision {
+    NO_COLLISION,
+    LEFT_WALL_COLLISION,
+    RIGHT_WALL_COLLISION
+  }
 
   private PongBall() {
     super(new GameCoord(0, 0));
@@ -21,16 +31,26 @@ public class PongBall extends GameObject
     screenHeight = screenWidth;
     xSpeedPerTimeUnit = 0;
     ySpeedPerTimeUnit = 0;
+    leftPaddle = null;
+    rightPaddle = null;
   }
 
   public PongBall(GameCoord pos, 
                   int screenWidth, 
-                  int screenHeight) {
+                  int screenHeight,
+                  PongPaddle leftPaddle,
+                  PongPaddle rightPaddle) {
     super(pos);
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
     xSpeedPerTimeUnit = 0.3;
     ySpeedPerTimeUnit = 0.3;
+    this.leftPaddle = leftPaddle;
+    this.rightPaddle = rightPaddle;
+  }
+  
+  public void resetBall(GameCoord pos) {
+    this.pos = pos;
   }
 
   public void paint(Graphics g) {
@@ -41,7 +61,26 @@ public class PongBall extends GameObject
                ballSize);
   }
 
+  public PongBallCollision getCurrCollision() {
+    return currCollision;
+  }
+
   public void update(int timeDelta) {
+    currCollision = PongBallCollision.NO_COLLISION;
+
+    if((pos.getX() <= (ballSize / 2))) {
+      if(!leftPaddle.isColliding(pos)) {
+        currCollision = PongBallCollision.LEFT_WALL_COLLISION;
+        System.out.println("LEFT WALL");
+      }
+    }
+    else if(pos.getX() >= (screenWidth - (ballSize / 2))) {
+      if(!rightPaddle.isColliding(pos)) {
+        currCollision = PongBallCollision.RIGHT_WALL_COLLISION;
+        System.out.println("RIGHT WALL");
+      }
+    }
+
     if((pos.getX() <= (ballSize / 2)) || (pos.getX() >= (screenWidth - (ballSize / 2)))) {
       xSpeedPerTimeUnit = -xSpeedPerTimeUnit;
     }

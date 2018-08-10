@@ -22,6 +22,17 @@ class PongPaddle extends GameObject
     this.length = length;
     this.screenHeight = screenHeight;
   }
+
+  public Boolean isColliding(GameCoord otherPos) {
+    Boolean retVal = false;
+
+    if(otherPos.getY() >= pos.getY() - (length / 2) &&
+       otherPos.getY() <= pos.getY() + (length / 2)) {
+      retVal = true;
+    }
+
+    return retVal;
+  }
   
   public void paint(Graphics g) {
     g.setColor(new Color(0, 0, 0));

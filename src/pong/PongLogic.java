@@ -20,13 +20,21 @@ public class PongLogic extends GameLogic
   private final PongWall downWall;
   private final PongBall ball;
   private final PongPaddle leftPaddle;
+  private final PongPaddle rightPaddle;
 
+  private final GameCoord PLAYER_2_STRING_POS = new GameCoord(480, 30);
+  private final String PLAYER_2_STRING = "Player 2 Score: ";
+  
+  private GameObjectText playerTwoScoreText;
+  private int player2Score = 0;
   private long prevTime;
 
   PongLogic() {
     super(640, 480); /* screenWidth, screenHeight */
-    GameObjectText text = new GameObjectText(new GameCoord(30, 30), "Text");
-    gameObjects.add(text);
+    playerTwoScoreText = new GameObjectText(PLAYER_2_STRING_POS, 
+                                            PLAYER_2_STRING + 
+                                            Integer.toString(player2Score));
+    gameObjects.add(playerTwoScoreText);
     leftWall = new PongWall(new GameCoord(2, 2), 
                             PongWall.PongWallDirection.VERTICAL, 
                             478);
@@ -44,11 +52,18 @@ public class PongLogic extends GameLogic
     gameObjects.add(upWall);
     gameObjects.add(downWall);
 
-    ball = new PongBall(new GameCoord(640 / 2, 480 / 2), 640, 480);
-    gameObjects.add(ball);
-
     leftPaddle = new PongPaddle(new GameCoord(5, 480 / 2), 60, 480);
     gameObjects.add(leftPaddle);
+
+    rightPaddle = new PongPaddle(new GameCoord(631, 480 / 2), 60, 480);
+    gameObjects.add(rightPaddle);    
+
+    ball = new PongBall(new GameCoord(640 / 2, 480 / 2), 
+                        640, 
+                        480,
+                        leftPaddle,
+                        rightPaddle);
+    gameObjects.add(ball);
 
     prevTime = 0;
   }
@@ -77,6 +92,19 @@ public class PongLogic extends GameLogic
     while(gameIter.hasNext()) {
       GameObject object = (GameObject) gameIter.next();
       object.update(timeDelta);
+    }
+
+    if(PongBall.PongBallCollision.LEFT_WALL_COLLISION == ball.getCurrCollision()) {
+      player2Score++;
+      gameObjects.remove(playerTwoScoreText);
+      playerTwoScoreText = new GameObjectText(PLAYER_2_STRING_POS, 
+                                              PLAYER_2_STRING + 
+                                              Integer.toString(player2Score));
+      gameObjects.add(playerTwoScoreText);    
+      ball.resetBall(new GameCoord(640 / 2, 480 / 2));
+    }
+    else if(PongBall.PongBallCollision.RIGHT_WALL_COLLISION == ball.getCurrCollision()) {
+
     }
 
     gui.redraw();
