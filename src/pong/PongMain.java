@@ -8,8 +8,7 @@ public class PongMain
   public static void main(String[] args) {
     System.out.println("Main called");
 
-    GameRunner engine = new GameRunner(new PongLogic());
-
-    engine.execute();
+    final int targetFps = 30;
+    GameRunner engine = new GameRunner(new PongLogic(), targetFps);
   }
 }

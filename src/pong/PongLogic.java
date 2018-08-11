@@ -65,24 +65,14 @@ public class PongLogic extends GameLogic
                         rightPaddle);
     gameObjects.add(ball);
 
-    prevTime = 0;
+    prevTime = System.currentTimeMillis();
   }
 
   public void execute() {
-    System.out.println("Pong START");
-    /* Run game logic at 30ish fps */
-    Runnable pongRunnable = new Runnable()
-    {
-      public void run()
-      {
-        pongRun();
-      }
-    };
-    prevTime = System.currentTimeMillis();
-    gameExecutor.scheduleAtFixedRate(pongRunnable, 0, 33, TimeUnit.MILLISECONDS);    
+    pongRun();
   }
 
-  public void pongRun() {
+  private void pongRun() {
     long now = System.currentTimeMillis();
 
     int timeDelta = (int) (now - prevTime);
@@ -103,8 +93,6 @@ public class PongLogic extends GameLogic
     else if(PongBall.PongBallCollision.RIGHT_WALL_COLLISION == ball.getCurrCollision()) {
 
     }
-
-    gui.redraw();
 
     prevTime = System.currentTimeMillis();
   }

@@ -1,24 +1,48 @@
 package src.core;
 
 import src.core.GameLogic;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import src.core.GameGui;
 
 public class GameRunner
 {
   private final GameLogic game;
   private final GameGui gui;
+  private final ScheduledExecutorService gameExecutor;
+  private final int targetFps;
 
-  public GameRunner(GameLogic game) {
+  public GameRunner(GameLogic game, int targetFps) {
     this.game = game;
+    this.targetFps = targetFps;
     System.out.println("GameRunner instantiated with screen size: " + 
                        Integer.toString(game.getScreenWidth()) + 
                        ", " + 
                        Integer.toString(game.getScreenHeight()));
 
     gui = new GameGui(this.game);
-    this.game.setGui(gui);
+
+    gameExecutor = Executors.newSingleThreadScheduledExecutor();
+    Runnable gameRunnable = new Runnable()
+    {
+      public void run()
+      {
+        execute();
+      }
+    };
+    gameExecutor.scheduleAtFixedRate(gameRunnable, 3000, (int)((1000 / targetFps) + 0.5), TimeUnit.MILLISECONDS);    
+    game.setGameRunner(this);   
   }
-  public void execute() {
+
+  public void stop() {
+    gameExecutor.shutdownNow();
+  }
+
+  private void execute() {
     game.execute();
+    gui.redraw();
   }
 }
