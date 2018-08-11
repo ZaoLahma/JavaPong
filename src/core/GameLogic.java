@@ -32,15 +32,6 @@ public abstract class GameLogic
     return screenHeight;
   }
 
-  public void stop() {
-    this.active = false;
-    gameRunner.stop();
-  }
-
-  public void setGameRunner(GameRunner gameRunner) {
-    this.gameRunner = gameRunner;
-  }
-
   public Vector<GameObject> getGameObjects() {
     return gameObjects;
   }

@@ -10,16 +10,16 @@ import src.core.GameLogic;
 public class GameGui
 {
   private final GameScreen screen;
-  private final GameLogic game;
+  private final GameRunner runner;
 
   private GameGui() {
     screen = null;
-    game = null;
+    runner = null;
   }
 
-  public GameGui(GameLogic game) {
-    this.game = game;
-    screen = new GameScreen(this.game);
+  public GameGui(GameRunner runner) {
+    this.runner = runner;
+    screen = new GameScreen(runner.getGame());
 
     JFrame frame = new JFrame();
     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -28,14 +28,14 @@ public class GameGui
     frame.addWindowListener(new WindowAdapter() {
       public void windowClosing(WindowEvent e) {
         System.out.println("Window close");
-        game.stop();
+        runner.stop();
       }
     });
 
     frame.addKeyListener(new KeyListener() {
       public void keyPressed(KeyEvent event) {
         //System.out.println("Key pressed: " + event.getKeyCode());
-        game.onKeyPressed(event.getKeyCode());
+        runner.getGame().onKeyPressed(event.getKeyCode());
       }
 
       public void keyTyped(KeyEvent e) {

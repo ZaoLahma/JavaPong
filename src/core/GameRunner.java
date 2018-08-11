@@ -23,7 +23,7 @@ public class GameRunner
                        ", " + 
                        Integer.toString(game.getScreenHeight()));
 
-    gui = new GameGui(this.game);
+    gui = new GameGui(this);
 
     gameExecutor = Executors.newSingleThreadScheduledExecutor();
     Runnable gameRunnable = new Runnable()
@@ -33,8 +33,11 @@ public class GameRunner
         execute();
       }
     };
-    gameExecutor.scheduleAtFixedRate(gameRunnable, 3000, (int)((1000 / targetFps) + 0.5), TimeUnit.MILLISECONDS);    
-    game.setGameRunner(this);   
+    gameExecutor.scheduleAtFixedRate(gameRunnable, 3000, (int)((1000 / targetFps) + 0.5), TimeUnit.MILLISECONDS);     
+  }
+
+  public GameLogic getGame() {
+    return game;
   }
 
   public void stop() {
