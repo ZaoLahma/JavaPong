@@ -37,6 +37,7 @@ public class PongLogic extends GameLogic
   private GameObjectText playerTwoScoreText;
   private int player2Score = 0;
 
+  private Boolean firstExec = true;
   private long prevTime;
 
   PongLogic() {
@@ -82,17 +83,22 @@ public class PongLogic extends GameLogic
                         rightPaddle);
     gameObjects.add(ball);
 
-    prevTime = System.currentTimeMillis();
-
     bot = new PongBot(this, this.rightPaddle, this.ball);
+    
+    prevTime = 0;
   }
 
   public void execute() {
+    if(firstExec) {
+      prevTime = System.currentTimeMillis();
+      firstExec = false;
+    }
+
+    bot.execute();
     long now = System.currentTimeMillis();
     if((int)(now - prevTime) >= PONG_LOGIC_DELAY) {
       pongRun();
     }
-    bot.execute();
   }
 
   private void pongRun() {
