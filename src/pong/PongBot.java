@@ -9,6 +9,10 @@ public class PongBot
   private final int PONG_BOT_KEY_UP = 0xFFFFFFFF;
   private final int PONG_BOT_KEY_DOWN = 0xFFFFFFFE;
 
+  private long prevTime = 0;
+
+  private final int PONG_BOT_DELAY = 60; /* ms */
+
   private PongBot() {
     pong = null;
     ownPaddle = null;
@@ -21,6 +25,8 @@ public class PongBot
     this.pong = pong;
     this.ownPaddle = ownPaddle;
     this.ball = ball;
+
+    prevTime = System.currentTimeMillis();
   }
 
   public int getBotKeyUp() {
@@ -32,13 +38,20 @@ public class PongBot
   }
 
   public void execute() {
-    if(!ownPaddle.isColliding(ball.getPos())) {
-      if(ownPaddle.getPos().getY() > ball.getPos().getY()) {
-        pong.onKeyPressed(PONG_BOT_KEY_UP);
+    long now = System.currentTimeMillis();
+
+    if ((int)(now - prevTime) > PONG_BOT_DELAY) {
+      if(ball.getXSpeedPerTimeUnit() > 0) {
+        if(!ownPaddle.isColliding(ball.getPos())) {
+          if(ownPaddle.getPos().getY() > ball.getPos().getY()) {
+            pong.onKeyPressed(PONG_BOT_KEY_UP);
+          }
+          else if(ownPaddle.getPos().getY() < ball.getPos().getY()) {
+            pong.onKeyPressed(PONG_BOT_KEY_DOWN);
+          }
+        }
       }
-      else if(ownPaddle.getPos().getY() < ball.getPos().getY()) {
-        pong.onKeyPressed(PONG_BOT_KEY_DOWN);
-      }
+      prevTime = System.currentTimeMillis();
     }
   }
 }

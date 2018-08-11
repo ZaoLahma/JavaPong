@@ -23,19 +23,35 @@ public class PongLogic extends GameLogic
   private final PongPaddle rightPaddle;
   private final PongBot bot;
 
+  private final GameCoord PLAYER_1_STRING_POS = new GameCoord(30, 30);
+  private final String PLAYER_1_STRING = "Player 1 Score: ";
+
   private final GameCoord PLAYER_2_STRING_POS = new GameCoord(480, 30);
   private final String PLAYER_2_STRING = "Player 2 Score: ";
+
+  private final int PONG_LOGIC_DELAY = 30; /* ms */
   
+  private GameObjectText playerOneScoreText;
+  private int player1Score = 0;
+
   private GameObjectText playerTwoScoreText;
   private int player2Score = 0;
+
   private long prevTime;
 
   PongLogic() {
     super(640, 480); /* screenWidth, screenHeight */
+
+    playerOneScoreText = new GameObjectText(PLAYER_1_STRING_POS, 
+                                            PLAYER_1_STRING + 
+                                            Integer.toString(player1Score));
+    gameObjects.add(playerOneScoreText);
+
     playerTwoScoreText = new GameObjectText(PLAYER_2_STRING_POS, 
                                             PLAYER_2_STRING + 
                                             Integer.toString(player2Score));
     gameObjects.add(playerTwoScoreText);
+
     leftWall = new PongWall(new GameCoord(2, 2), 
                             PongWall.PongWallDirection.VERTICAL, 
                             478);
@@ -72,8 +88,11 @@ public class PongLogic extends GameLogic
   }
 
   public void execute() {
+    long now = System.currentTimeMillis();
+    if((int)(now - prevTime) >= PONG_LOGIC_DELAY) {
+      pongRun();
+    }
     bot.execute();
-    pongRun();
   }
 
   private void pongRun() {
@@ -95,7 +114,10 @@ public class PongLogic extends GameLogic
       ball.resetBall(new GameCoord(640 / 2, 480 / 2));
     }
     else if(PongBall.PongBallCollision.RIGHT_WALL_COLLISION == ball.getCurrCollision()) {
-
+      player1Score++;
+      playerOneScoreText.setText(PLAYER_1_STRING + 
+                                 Integer.toString(player1Score));  
+      ball.resetBall(new GameCoord(640 / 2, 480 / 2));
     }
 
     prevTime = System.currentTimeMillis();
@@ -103,17 +125,17 @@ public class PongLogic extends GameLogic
 
   public void onKeyPressed(int key) {
     if(38 == key) {
-      leftPaddle.move(-20);
+      leftPaddle.move(-(leftPaddle.getLength() / 2));
     }
     else if(40 == key) {
-      leftPaddle.move(20);
+      leftPaddle.move((leftPaddle.getLength() / 2));
     }
 
     if(bot.getBotKeyDown() == key) {
-      rightPaddle.move(20);
+      rightPaddle.move((rightPaddle.getLength() / 2));
     }
     else if(bot.getBotKeyUp() == key) {
-      rightPaddle.move(-20);
+      rightPaddle.move(-(rightPaddle.getLength() / 2));
     }
   }
 }

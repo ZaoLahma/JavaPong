@@ -11,6 +11,7 @@ public class PongBall extends GameObject
   private final int screenWidth;
   private final int screenHeight;
   private final int ballSize = 20;
+  private final double maxYSpeed = 0.32;
   private final PongPaddle leftPaddle;
   private final PongPaddle rightPaddle;
 
@@ -48,9 +49,15 @@ public class PongBall extends GameObject
     this.leftPaddle = leftPaddle;
     this.rightPaddle = rightPaddle;
   }
+
+  public double getXSpeedPerTimeUnit() {
+    return xSpeedPerTimeUnit;
+  }
   
   public void resetBall(GameCoord pos) {
     this.pos = pos;
+    xSpeedPerTimeUnit = 0.25;
+    ySpeedPerTimeUnit = 0.25;
   }
 
   public void paint(Graphics g) {
@@ -83,10 +90,24 @@ public class PongBall extends GameObject
 
     if((pos.getX() <= (ballSize / 2)) || (pos.getX() >= (screenWidth - (ballSize / 2)))) {
       xSpeedPerTimeUnit = -xSpeedPerTimeUnit;
+      if(xSpeedPerTimeUnit > 0) {
+        xSpeedPerTimeUnit += 0.01;
+      }
+      else {
+        xSpeedPerTimeUnit -= 0.01;
+      }
     }
 
     if((pos.getY() <= (ballSize / 2)) || (pos.getY() >= (screenHeight - (ballSize / 2)))) {
       ySpeedPerTimeUnit = -ySpeedPerTimeUnit;
+      if(Math.abs(ySpeedPerTimeUnit) < maxYSpeed) {
+        if(ySpeedPerTimeUnit > 0) {
+          ySpeedPerTimeUnit += 0.01;
+        }
+        else {
+          ySpeedPerTimeUnit -= 0.01;
+        }
+      }
     }
 
     int xDiff = (int)((timeDelta * xSpeedPerTimeUnit) + 0.5);

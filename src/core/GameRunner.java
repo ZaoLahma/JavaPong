@@ -33,7 +33,7 @@ public class GameRunner
         execute();
       }
     };
-    gameExecutor.scheduleAtFixedRate(gameRunnable, 3000, (int)((1000 / targetFps) + 0.5), TimeUnit.MILLISECONDS);     
+    gameExecutor.scheduleAtFixedRate(gameRunnable, 1000, (int)((1000 / targetFps) + 0.5), TimeUnit.MILLISECONDS);     
   }
 
   public GameLogic getGame() {
