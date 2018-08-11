@@ -33,6 +33,10 @@ class PongPaddle extends GameObject
 
     return retVal;
   }
+
+  public int getLength() {
+    return length;
+  }
   
   public void paint(Graphics g) {
     g.setColor(new Color(0, 0, 0));

@@ -21,6 +21,10 @@ public abstract class GameObject
     this.pos = pos;
   }
 
+  public GameCoord getPos() {
+    return pos;
+  }
+
   public abstract void paint(Graphics g);
 
   public abstract void update(int timeDelta);

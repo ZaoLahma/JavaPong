@@ -21,6 +21,7 @@ public class PongLogic extends GameLogic
   private final PongBall ball;
   private final PongPaddle leftPaddle;
   private final PongPaddle rightPaddle;
+  private final PongBot bot;
 
   private final GameCoord PLAYER_2_STRING_POS = new GameCoord(480, 30);
   private final String PLAYER_2_STRING = "Player 2 Score: ";
@@ -66,9 +67,12 @@ public class PongLogic extends GameLogic
     gameObjects.add(ball);
 
     prevTime = System.currentTimeMillis();
+
+    bot = new PongBot(this, this.rightPaddle, this.ball);
   }
 
   public void execute() {
+    bot.execute();
     pongRun();
   }
 
@@ -103,6 +107,13 @@ public class PongLogic extends GameLogic
     }
     else if(40 == key) {
       leftPaddle.move(20);
+    }
+
+    if(bot.getBotKeyDown() == key) {
+      rightPaddle.move(20);
+    }
+    else if(bot.getBotKeyUp() == key) {
+      rightPaddle.move(-20);
     }
   }
 }
