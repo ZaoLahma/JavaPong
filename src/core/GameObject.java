@@ -16,9 +16,10 @@ public abstract class GameObject
   }
   
   public GameObject(GameCoord pos) {
-    objectId = GameUniqueId.getInstance().getUniqueId();
+    objectId = GameUniqueId.getApi().getUniqueId();
     System.out.println("Created object with id " + Integer.toString(objectId));
     this.pos = pos;
+    GameObjectContainer.getApi().addGameObject(this);
   }
 
   public GameCoord getPos() {

@@ -7,7 +7,7 @@ public class GameUniqueId
 
   private int currId = 0;
 
-  public static GameUniqueId getInstance() {
+  public static GameUniqueId getApi() {
     return instance;
   }
 

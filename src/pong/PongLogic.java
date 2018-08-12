@@ -7,6 +7,7 @@ import src.core.GameCoord;
 import src.core.GameLogic;
 import src.core.GameObject;
 import src.core.GameObjectText;
+import src.core.GameObjectContainer;
 import src.pong.PongWall.PongWallDirection;
 
 public class PongLogic extends GameLogic
@@ -42,12 +43,10 @@ public class PongLogic extends GameLogic
     playerOneScoreText = new GameObjectText(PLAYER_1_STRING_POS, 
                                             PLAYER_1_STRING + 
                                             Integer.toString(player1Score));
-    gameObjects.add(playerOneScoreText);
 
     playerTwoScoreText = new GameObjectText(PLAYER_2_STRING_POS, 
                                             PLAYER_2_STRING + 
                                             Integer.toString(player2Score));
-    gameObjects.add(playerTwoScoreText);
 
     leftWall = new PongWall(new GameCoord(2, 2), 
                             PongWall.PongWallDirection.VERTICAL, 
@@ -61,23 +60,16 @@ public class PongLogic extends GameLogic
     downWall = new PongWall(new GameCoord(2, 478),
                             PongWall.PongWallDirection.HORIZONTAL, 
                             638);
-    gameObjects.add(leftWall);
-    gameObjects.add(rightWall);
-    gameObjects.add(upWall);
-    gameObjects.add(downWall);
 
     leftPaddle = new PongPaddle(new GameCoord(5, 480 / 2), 60, 480);
-    gameObjects.add(leftPaddle);
 
-    rightPaddle = new PongPaddle(new GameCoord(631, 480 / 2), 60, 480);
-    gameObjects.add(rightPaddle);    
+    rightPaddle = new PongPaddle(new GameCoord(631, 480 / 2), 60, 480);   
 
     ball = new PongBall(new GameCoord(640 / 2, 480 / 2), 
                         640, 
                         480,
                         leftPaddle,
                         rightPaddle);
-    gameObjects.add(ball);
 
     bot = new PongBot(this, this.rightPaddle, this.ball);
   }
@@ -94,7 +86,7 @@ public class PongLogic extends GameLogic
   }
 
   private void pongRun(final int timeDeltaMillis) {
-
+    Vector<GameObject> gameObjects = GameObjectContainer.getApi().getGameObjects();
     gameObjects.forEach(gameObject -> 
                         gameObject.update(timeDeltaMillis));
 
