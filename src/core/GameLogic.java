@@ -36,7 +36,7 @@ public abstract class GameLogic
     return gameObjects;
   }
 
-  public abstract void execute();
+  public abstract void execute(int timeDeltaMillis);
 
   public abstract void onKeyPressed(int key);
 }

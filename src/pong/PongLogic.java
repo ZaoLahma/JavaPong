@@ -37,8 +37,7 @@ public class PongLogic extends GameLogic
   private GameObjectText playerTwoScoreText;
   private int player2Score = 0;
 
-  private Boolean firstExec = true;
-  private long prevTime;
+  private int timeDeltaAcc = 0;
 
   PongLogic() {
     super(640, 480); /* screenWidth, screenHeight */
@@ -84,33 +83,25 @@ public class PongLogic extends GameLogic
     gameObjects.add(ball);
 
     bot = new PongBot(this, this.rightPaddle, this.ball);
-    
-    prevTime = 0;
   }
 
-  public void execute() {
-    if(firstExec) {
-      prevTime = System.currentTimeMillis();
-      firstExec = false;
-    }
-
+  public void execute(final int timeDeltaMillis) {
     bot.execute();
-    long now = System.currentTimeMillis();
-    if((int)(now - prevTime) >= PONG_LOGIC_DELAY) {
-      pongRun();
+    if(timeDeltaAcc >= PONG_LOGIC_DELAY) {
+      pongRun(timeDeltaAcc);
+      timeDeltaAcc = 0;
+    }
+    else {
+      timeDeltaAcc += timeDeltaMillis;
     }
   }
 
-  private void pongRun() {
-    long now = System.currentTimeMillis();
-
-    int timeDelta = (int) (now - prevTime);
-
+  private void pongRun(final int timeDeltaMillis) {
     Iterator gameIter = gameObjects.iterator();
 
     while(gameIter.hasNext()) {
       GameObject object = (GameObject) gameIter.next();
-      object.update(timeDelta);
+      object.update(timeDeltaMillis);
     }
 
     if(PongBall.PongBallCollision.LEFT_WALL_COLLISION == ball.getCurrCollision()) {
@@ -125,8 +116,6 @@ public class PongLogic extends GameLogic
                                  Integer.toString(player1Score));  
       ball.resetBall(new GameCoord(640 / 2, 480 / 2));
     }
-
-    prevTime = System.currentTimeMillis();
   }
 
   public void onKeyPressed(int key) {

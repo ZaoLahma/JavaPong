@@ -15,6 +15,9 @@ public class GameRunner
   private final ScheduledExecutorService gameExecutor;
   private final int targetFps;
 
+  private long prevTime = 0;
+  private Boolean firstExec = true;
+
   public GameRunner(GameLogic game, int targetFps) {
     this.game = game;
     this.targetFps = targetFps;
@@ -45,7 +48,17 @@ public class GameRunner
   }
 
   private void execute() {
-    game.execute();
+    if(firstExec) {
+      prevTime = System.currentTimeMillis();
+      firstExec = false;
+    }
+
+    long now = System.currentTimeMillis();
+    int timeDeltaMillis = (int)(now - prevTime);
+
+    game.execute(timeDeltaMillis);
     gui.redraw();
+
+    prevTime = System.currentTimeMillis();
   }
 }
