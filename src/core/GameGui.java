@@ -82,12 +82,9 @@ class GameScreen extends JPanel {
     super.paintComponent(g);
 
     Graphics2D g2D = (Graphics2D) g;
-    g2D.setStroke(new BasicStroke(3));    
-
+    g2D.setStroke(new BasicStroke(3));
+    
     Vector<GameObject> gameObjects = game.getGameObjects();
-
-    for(int i = 0; i < gameObjects.size(); ++i) {
-      gameObjects.elementAt(i).paint(g);
-    }
+    gameObjects.forEach(gameObject -> gameObject.paint(g));
   }
 }

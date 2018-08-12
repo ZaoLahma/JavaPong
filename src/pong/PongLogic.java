@@ -2,9 +2,6 @@ package src.pong;
 
 import java.util.Iterator;
 import java.util.Vector;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 import src.core.GameCoord;
 import src.core.GameLogic;
@@ -97,12 +94,9 @@ public class PongLogic extends GameLogic
   }
 
   private void pongRun(final int timeDeltaMillis) {
-    Iterator gameIter = gameObjects.iterator();
 
-    while(gameIter.hasNext()) {
-      GameObject object = (GameObject) gameIter.next();
-      object.update(timeDeltaMillis);
-    }
+    gameObjects.forEach(gameObject -> 
+                        gameObject.update(timeDeltaMillis));
 
     if(PongBall.PongBallCollision.LEFT_WALL_COLLISION == ball.getCurrCollision()) {
       player2Score++;
