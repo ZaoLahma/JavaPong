@@ -44,8 +44,8 @@ public class PongBall extends GameObject
     super(pos);
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
-    xSpeedPerTimeUnit = 0.3;
-    ySpeedPerTimeUnit = 0.3;
+    xSpeedPerTimeUnit = 0.25;
+    ySpeedPerTimeUnit = 0.25;
     this.leftPaddle = leftPaddle;
     this.rightPaddle = rightPaddle;
   }
@@ -96,10 +96,7 @@ public class PongBall extends GameObject
       else {
         xSpeedPerTimeUnit -= 0.01;
       }
-    }
-
-    if((pos.getY() <= (ballSize / 2)) || (pos.getY() >= (screenHeight - (ballSize / 2)))) {
-      ySpeedPerTimeUnit = -ySpeedPerTimeUnit;
+   
       if(Math.abs(ySpeedPerTimeUnit) < maxYSpeed) {
         if(ySpeedPerTimeUnit > 0) {
           ySpeedPerTimeUnit += 0.01;
@@ -110,8 +107,20 @@ public class PongBall extends GameObject
       }
     }
 
-    int xDiff = (int)((timeDelta * xSpeedPerTimeUnit) + 0.5);
-    int yDiff = (int)((timeDelta * ySpeedPerTimeUnit) + 0.5);
+    if((pos.getY() <= (ballSize / 2)) || (pos.getY() >= (screenHeight - (ballSize / 2)))) {
+      ySpeedPerTimeUnit = -ySpeedPerTimeUnit;
+    }
+
+    int xDiff = (int)((timeDelta * Math.abs(xSpeedPerTimeUnit)) + 0.5);
+    int yDiff = (int)((timeDelta * Math.abs(ySpeedPerTimeUnit)) + 0.5);
+
+    if((xSpeedPerTimeUnit < 0) && (xDiff > 0)) {
+      xDiff = -xDiff;
+    }
+
+    if((ySpeedPerTimeUnit < 0) && (yDiff > 0)) {
+      yDiff = -yDiff;
+    }    
 
     if(pos.getX() + xDiff < (ballSize / 2)) {
       pos.setX((ballSize / 2));

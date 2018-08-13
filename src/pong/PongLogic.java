@@ -1,8 +1,5 @@
 package src.pong;
 
-import java.util.Iterator;
-import java.util.Vector;
-
 import src.core.GameCoord;
 import src.core.GameLogic;
 import src.core.GameObject;
@@ -34,8 +31,6 @@ public class PongLogic extends GameLogic
 
   private GameObjectText playerTwoScoreText;
   private int player2Score = 0;
-
-  private int timeDeltaAcc = 0;
 
   PongLogic() {
     super(640, 480); /* screenWidth, screenHeight */
@@ -76,20 +71,10 @@ public class PongLogic extends GameLogic
 
   public void execute(final int timeDeltaMillis) {
     bot.execute();
-    if(timeDeltaAcc >= PONG_LOGIC_DELAY) {
-      pongRun(timeDeltaAcc);
-      timeDeltaAcc = 0;
-    }
-    else {
-      timeDeltaAcc += timeDeltaMillis;
-    }
+    pongRun();
   }
 
-  private void pongRun(final int timeDeltaMillis) {
-    Vector<GameObject> gameObjects = GameObjectContainer.getApi().getGameObjects();
-    gameObjects.forEach(gameObject -> 
-                        gameObject.update(timeDeltaMillis));
-
+  private void pongRun() {
     if(PongBall.PongBallCollision.LEFT_WALL_COLLISION == ball.getCurrCollision()) {
       player2Score++;
       playerTwoScoreText.setText(PLAYER_2_STRING + 

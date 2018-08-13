@@ -5,6 +5,7 @@ import src.core.GameLogic;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.Vector;
 
 import src.core.GameGui;
 
@@ -56,8 +57,12 @@ public class GameRunner
     long now = System.currentTimeMillis();
     int timeDeltaMillis = (int)(now - prevTime);
 
-    game.execute(timeDeltaMillis);
-    gui.redraw();
+    Vector<GameObject> gameObjects = GameObjectContainer.getApi().getGameObjects();
+    gameObjects.forEach(gameObject -> 
+                        gameObject.update(timeDeltaMillis));  
+
+    game.execute(timeDeltaMillis);  
+    gui.redraw();  
 
     prevTime = System.currentTimeMillis();
   }
