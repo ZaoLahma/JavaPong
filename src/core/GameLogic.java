@@ -8,9 +8,11 @@ public abstract class GameLogic
 {
   private final int screenWidth;
   private final int screenHeight;
-  private GameRunner gameRunner;  
+  private GameRunner gameRunner;
+  private final String name;
 
-  public GameLogic(int screenWidth, int screenHeight) {
+  public GameLogic(final String name, int screenWidth, int screenHeight) {
+    this.name = name;
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
   }
@@ -18,6 +20,7 @@ public abstract class GameLogic
   private GameLogic() {
     this.screenWidth = 0;
     this.screenHeight = this.screenWidth;
+    this.name = null;
   }
 
   public int getScreenWidth() {
@@ -25,6 +28,10 @@ public abstract class GameLogic
   }
   public int getScreenHeight() {
     return screenHeight;
+  }
+
+  public String getGameName() {
+    return name;
   }
 
   public abstract void execute(int timeDeltaMillis);

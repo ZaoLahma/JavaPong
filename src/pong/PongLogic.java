@@ -33,7 +33,7 @@ public class PongLogic extends GameLogic
   private int player2Score = 0;
 
   PongLogic() {
-    super(640, 480); /* screenWidth, screenHeight */
+    super("JavaPong", 640, 480); /* screenWidth, screenHeight */
 
     playerOneScoreText = new GameObjectText(PLAYER_1_STRING_POS, 
                                             PLAYER_1_STRING + 

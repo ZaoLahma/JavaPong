@@ -11,7 +11,7 @@ public class PongBot
 
   private long prevTime = 0;
 
-  private final int PONG_BOT_DELAY = 60; /* ms */
+  private final int PONG_BOT_DELAY = 20; /* ms */
 
   private PongBot() {
     pong = null;

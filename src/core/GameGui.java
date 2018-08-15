@@ -22,6 +22,7 @@ public class GameGui
     screen = new GameScreen(runner.getGame());
 
     JFrame frame = new JFrame();
+    frame.setTitle(runner.getGame().getGameName());
     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     frame.setResizable(false);
   
