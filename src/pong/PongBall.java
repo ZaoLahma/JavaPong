@@ -123,17 +123,17 @@ public class PongBall extends GameObject
     }    
 
     if(pos.getX() + xDiff < (ballSize / 2)) {
-      pos.setX((ballSize / 2));
+      pos.setX(((ballSize / 2) + 1));
     }
     else if(pos.getX() + xDiff > screenWidth - (ballSize / 2)) {
-      pos.setX(screenWidth - (ballSize / 2));
+      pos.setX(screenWidth - ((ballSize / 2) + 1));
     }
 
     if(pos.getY() + yDiff < (ballSize / 2)) {
-      pos.setY((ballSize / 2));
+      pos.setY(((ballSize / 2) + 1));
     }
     else if(pos.getY() + yDiff > screenHeight - (ballSize / 2)) {
-      pos.setY(screenHeight - (ballSize / 2));
+      pos.setY(screenHeight - ((ballSize / 2) + 1));
     }    
 
     pos.setX(pos.getX() + xDiff);

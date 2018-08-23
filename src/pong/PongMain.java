@@ -10,6 +10,7 @@ public class PongMain
 
     final int targetFps = 100; /* Execute every 10ms */
     GameRunner engine = new GameRunner(new PongLogic(), targetFps);
+    engine.run();
 
     System.out.println("Main exited");
   }
